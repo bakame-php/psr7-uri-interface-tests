@@ -224,7 +224,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function uriProvider()
     {
         return [
-            'basic Url' => [
+            'URL with full components' => [
                 "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
                 "https",
                 "igor:rasmusen",
@@ -248,7 +248,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
                 "",
                 "http://www.example.com:443/",
             ],
-            "path formatting with rootless path and no authority" => [
+            "scheme + rootless path and no authority" => [
                 "http:example.com",
                 "http",
                 "",
@@ -260,7 +260,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
                 "",
                 "http:example.com",
             ],
-            "path formatting with absolute path and no authority" => [
+            "scheme + absolute path and no authority" => [
                 "http:/example.com",
                 "http",
                 "",

@@ -35,9 +35,7 @@ You need:
 Install
 -------
 
-```
-$ composer require nyamsprod/psr7-uriinterface-test-suite
-```
+clone this repo!!
 
 Testing
 -------
@@ -51,12 +49,12 @@ $ phpunit
 Adding a new implementation
 -------
 
-- Make sure your implementation is available on packagist first
+- Make sure your implementation is available on [packagist](https://packagist.org) first
 - Clone this repo
-- Update the composer.json file with your package
+- Update the `composer.json` file with your package
 - Add a new class in the `test` directory for your implementation that extends the `AbstractTestPsr7UriInterface` abstract class. You can copy/paste an implementation test suite to see how it works. Implements the `createUriObject` abstract method.
-- run the TestSuite it should works!!
-- you can submit your modification via Pull Request.
+- run the TestSuite.
+- you can submit your implementation via Pull Request (don't forget to update the `README.md` file with a link to your repo in the Tested implementation section).
 
 
 Contributing
@@ -68,7 +66,7 @@ Credits
 -------
 
 - [ignace nyamagana butera](https://github.com/nyamsprod)
-- [All Contributors](https://github.com/nyamsprod/url/contributors)
+- [All Contributors](https://github.com/nyamsprod/psr7-uri-interface-test-suite/contributors)
 
 License
 -------
