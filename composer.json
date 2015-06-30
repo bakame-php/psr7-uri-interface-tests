@@ -1,0 +1,13 @@
+{
+    "require": {
+        "zendframework/zend-diactoros": "^1.1",
+        "guzzlehttp/psr7": "^1.1",
+        "league/url": "dev-master",
+        "slim/slim": "3.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Psr7\\UriInterface\\Testsuite\\": "test"
+        }
+    }
+}
