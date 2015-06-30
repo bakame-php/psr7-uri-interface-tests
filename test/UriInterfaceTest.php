@@ -3,7 +3,6 @@
 namespace Psr7\UriInterface\Testsuite;
 
 use PHPUnit_Framework_TestCase;
-use ReflectionClass;
 
 /**
  * @group compare
@@ -13,91 +12,100 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testToString($url, $classname1, $classname2)
+    public function testToString($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->__toString(), $obj2->createUriObject($url)->__toString());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->__toString(),
+            (new $testObj2())->createUriObject($url)->__toString()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetScheme($url, $classname1, $classname2)
+    public function testGetScheme($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getScheme(), $obj2->createUriObject($url)->getScheme());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getScheme(),
+            (new $testObj2())->createUriObject($url)->getScheme()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetUserInfo($url, $classname1, $classname2)
+    public function testGetUserInfo($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getUserInfo(), $obj2->createUriObject($url)->getUserInfo());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getUserInfo(),
+            (new $testObj2())->createUriObject($url)->getUserInfo()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetHost($url, $classname1, $classname2)
+    public function testGetHost($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getHost(), $obj2->createUriObject($url)->getHost());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getHost(),
+            (new $testObj2())->createUriObject($url)->getHost()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetPort($url, $classname1, $classname2)
+    public function testGetPort($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getPort(), $obj2->createUriObject($url)->getPort());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getPort(),
+            (new $testObj2())->createUriObject($url)->getPort()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetAuthority($url, $classname1, $classname2)
+    public function testGetAuthority($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getAuthority(), $obj2->createUriObject($url)->getAuthority());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getAuthority(),
+            (new $testObj2())->createUriObject($url)->getAuthority()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetPath($url, $classname1, $classname2)
+    public function testGetPath($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getPath(), $obj2->createUriObject($url)->getPath());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getPath(),
+            (new $testObj2())->createUriObject($url)->getPath()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetQuery($url, $classname1, $classname2)
+    public function testGetQuery($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getQuery(), $obj2->createUriObject($url)->getQuery());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getQuery(),
+            (new $testObj2())->createUriObject($url)->getQuery()
+        );
     }
 
     /**
      * @dataProvider urlProvider
      */
-    public function testGetFragment($url, $classname1, $classname2)
+    public function testGetFragment($url, $testObj1, $testObj2)
     {
-        $obj1 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname1))->newInstance();
-        $obj2 = (new ReflectionClass("Psr7\UriInterface\Testsuite\\".$classname2))->newInstance();
-        $this->assertSame($obj1->createUriObject($url)->getFragment(), $obj2->createUriObject($url)->getFragment());
+        $this->assertSame(
+            (new $testObj1())->createUriObject($url)->getFragment(),
+            (new $testObj2())->createUriObject($url)->getFragment()
+        );
     }
 
     public function urlProvider()
@@ -113,18 +121,23 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
             "URL with full components" => "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
         ];
 
+        $implementationTestSuite = [
+            'diactoros' => 'Psr7\UriInterface\Testsuite\DiactorosTest',
+            'guzzle'    => 'Psr7\UriInterface\Testsuite\GuzzleTest',
+            'league'    => 'Psr7\UriInterface\Testsuite\LeagueUrlTest',
+            'slim'      => 'Psr7\UriInterface\Testsuite\SlimTest',
+        ];
+
         $res = [];
         foreach ($urlList as $name => $url) {
-            $res["$name : league - league"]       = [$url, 'LeagueUrlTest', 'LeagueUrlTest'];
-            $res["$name : league - guzzle"]       = [$url, 'LeagueUrlTest', 'GuzzleTest'];
-            $res["$name : league - diactoros"]    = [$url, 'LeagueUrlTest', 'DiactorosTest'];
-            $res["$name : league - slim"]         = [$url, 'LeagueUrlTest', 'SlimTest'];
-            $res["$name : guzzle - guzzle"]       = [$url, 'GuzzleTest', 'GuzzleTest'];
-            $res["$name : guzzle - diactoros"]    = [$url, 'GuzzleTest', 'DiactorosTest'];
-            $res["$name : guzzle - slim"]         = [$url, 'GuzzleTest', 'SlimTest'];
-            $res["$name : diactoros - diactoros"] = [$url, 'DiactorosTest', 'DiactorosTest'];
-            $res["$name : diactoros - slim"]      = [$url, 'DiactorosTest', 'SlimTest'];
-            $res["$name : slim - slim"]           = [$url, 'SlimTest', 'SlimTest'];
+            foreach ($implementationTestSuite as $implementationA => $testsuiteA) {
+                foreach ($implementationTestSuite as $implementationB => $testsuiteB) {
+                    $res["$implementationA - $implementationB : $name"] = [$url, $testsuiteA, $testsuiteB];
+                    if ($implementationA == $implementationB) {
+                        break;
+                    }
+                }
+            }
         }
 
         return $res;
