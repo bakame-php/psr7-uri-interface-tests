@@ -57,7 +57,8 @@ Adding a new implementation
 - Clone this repo
 - Update the `composer.json` file with your package
 - Add a new class in the `test` directory for your implementation that extends the `AbstractTestPsr7UriInterface` abstract class. You can copy/paste an implementation test suite to see how it works. Implements the `createUriObject` abstract method.
-- run the TestSuite.
+- Update the `UriInterfaceTest::urlProvider` with your implementation
+- run the test suite.
 - you can submit your implementation via Pull Request (don't forget to update the `README.md` file with a link to your repo in the Tested implementation section).
 
 
