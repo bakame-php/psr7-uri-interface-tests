@@ -6,7 +6,7 @@ use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
 /**
- * @group compareUri
+ * @group compare
  */
 class UriInterfaceTest extends PHPUnit_Framework_TestCase
 {
@@ -103,25 +103,28 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
     public function urlProvider()
     {
         $urlList = [
-            'http://www.example.com',
-            'http:/example.com',
-            'http:example.com',
-            'http://WwW.ExAmPlE.CoM',
-            "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
+            "url without scheme" => '//www.example.com/path/to/the/sky',
+            "url without scheme, authority" => '/path/to/the/sky',
+            "url with duplicate value query string" => "http://www.example.com?toto.foo=1&toto.foo=2",
+            "url without path, query and fragment" => 'http://www.example.com',
+            "scheme + absolute path and no authority" => 'http:/example.com',
+            "scheme + rootless path and no authority" => 'http:example.com',
+            "url with case sensitive host" => 'http://WwW.ExAmPlE.CoM',
+            "URL with full components" => "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
         ];
 
         $res = [];
-        foreach ($urlList as $url) {
-            $res["league-league-$url"]       = [$url, 'LeagueUrlTest', 'LeagueUrlTest'];
-            $res["league-guzzle-$url"]       = [$url, 'LeagueUrlTest', 'GuzzleTest'];
-            $res["league-diactoros-$url"]    = [$url, 'LeagueUrlTest', 'DiactorosTest'];
-            $res["league-slim-$url"]         = [$url, 'LeagueUrlTest', 'SlimTest'];
-            $res["guzzle-guzzle-$url"]       = [$url, 'GuzzleTest', 'GuzzleTest'];
-            $res["guzzle-diactoros-$url"]    = [$url, 'GuzzleTest', 'DiactorosTest'];
-            $res["guzzle-slim-$url"]         = [$url, 'GuzzleTest', 'SlimTest'];
-            $res["diactoros-diactoros-$url"] = [$url, 'DiactorosTest', 'DiactorosTest'];
-            $res["diactoros-slim-$url"]      = [$url, 'DiactorosTest', 'SlimTest'];
-            $res["slim-slim-$url"]           = [$url, 'SlimTest', 'SlimTest'];
+        foreach ($urlList as $name => $url) {
+            $res["$name : league - league"]       = [$url, 'LeagueUrlTest', 'LeagueUrlTest'];
+            $res["$name : league - guzzle"]       = [$url, 'LeagueUrlTest', 'GuzzleTest'];
+            $res["$name : league - diactoros"]    = [$url, 'LeagueUrlTest', 'DiactorosTest'];
+            $res["$name : league - slim"]         = [$url, 'LeagueUrlTest', 'SlimTest'];
+            $res["$name : guzzle - guzzle"]       = [$url, 'GuzzleTest', 'GuzzleTest'];
+            $res["$name : guzzle - diactoros"]    = [$url, 'GuzzleTest', 'DiactorosTest'];
+            $res["$name : guzzle - slim"]         = [$url, 'GuzzleTest', 'SlimTest'];
+            $res["$name : diactoros - diactoros"] = [$url, 'DiactorosTest', 'DiactorosTest'];
+            $res["$name : diactoros - slim"]      = [$url, 'DiactorosTest', 'SlimTest'];
+            $res["$name : slim - slim"]           = [$url, 'SlimTest', 'SlimTest'];
         }
 
         return $res;

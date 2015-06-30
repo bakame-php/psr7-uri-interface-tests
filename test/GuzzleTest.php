@@ -4,6 +4,9 @@ namespace Psr7\UriInterface\Testsuite;
 
 use GuzzleHttp\Psr7\Uri;
 
+/**
+ * @group guzzle
+ */
 class GuzzleTest extends AbstractTestPsr7UriInterface
 {
     /**
