@@ -6,7 +6,7 @@ Motivation
 
 While developing [League Url](https://github.com/thephpleague/url/) version 4, I wanted to:
 
-- implement the [PSR-7 UriInterface](http://php-fig.org/psr-7/#3-5-psr-http-message-uriinterface);
+- implement the [PSR-7 UriInterface](http://php-fig.org/psr/psr-7/#3-5-psr-http-message-uriinterface);
 - compare objects implementing this interface easily with a `Url::sameValueAs` method;
 
 On the `League\Url` test suite the method worked because I mocked the interface but on real world implementation it failed miserably. So I setup this test suite to compare implementations against what the interface expects.
