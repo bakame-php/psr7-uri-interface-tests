@@ -11,6 +11,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider urlProvider
+     * @group toString
      */
     public function testToString($url, $testObj1, $testObj2)
     {
@@ -22,6 +23,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group scheme
      */
     public function testGetScheme($url, $testObj1, $testObj2)
     {
@@ -33,6 +35,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group userinfo
      */
     public function testGetUserInfo($url, $testObj1, $testObj2)
     {
@@ -44,6 +47,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group host
      */
     public function testGetHost($url, $testObj1, $testObj2)
     {
@@ -55,6 +59,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group port
      */
     public function testGetPort($url, $testObj1, $testObj2)
     {
@@ -66,6 +71,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group authority
      */
     public function testGetAuthority($url, $testObj1, $testObj2)
     {
@@ -77,6 +83,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group path
      */
     public function testGetPath($url, $testObj1, $testObj2)
     {
@@ -88,6 +95,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group query
      */
     public function testGetQuery($url, $testObj1, $testObj2)
     {
@@ -99,6 +107,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider urlProvider
+     * @group fragment
      */
     public function testGetFragment($url, $testObj1, $testObj2)
     {
@@ -113,7 +122,7 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
         $urlList = [
             "url without scheme" => '//www.example.com/path/to/the/sky',
             "url without scheme, authority" => '/path/to/the/sky',
-            "url with duplicate value query string" => "http://www.example.com?toto.foo=1&toto.foo=2",
+            "url with duplicate value query string" => "http://www.example.com?toto.foo=1&toto.foo=1",
             "url without path, query and fragment" => 'http://www.example.com',
             "scheme + absolute path and no authority" => 'http:/example.com',
             "scheme + rootless path and no authority" => 'http:example.com',

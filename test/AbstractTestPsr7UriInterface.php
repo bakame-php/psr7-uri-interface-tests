@@ -13,6 +13,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group scheme
      */
     public function testGetScheme($url, $scheme)
     {
@@ -22,6 +23,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group userinfo
      */
     public function testGetUserInfo($url, $scheme, $userinfo)
     {
@@ -42,6 +44,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group port
      *
      * If no port is present and no scheme is present, this method MUST return a null value
      * If no port is present but a scheme is present, this method MAY return the standard port, but SHOULD return null
@@ -54,6 +57,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group authority
      *
      * If the port component is not set or is the standard port for the current
      * scheme, it SHOULD NOT be included.
@@ -66,6 +70,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group path
      *
      * The value returned MUST be percent-encoded, but MUST NOT double-encode
      * any characters. To determine what characters to encode, please refer to
@@ -79,6 +84,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group query
      *
      * The value returned MUST be percent-encoded, but MUST NOT double-encode
      * any characters. To determine what characters to encode, please refer to
@@ -102,6 +108,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group fragment
      *
      * The value returned MUST be percent-encoded, but MUST NOT double-encode
      * any characters. To determine what characters to encode, please refer to
@@ -125,6 +132,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group toString
      *
      * - If a scheme is present, it MUST be suffixed by ":".
      * - If an authority is present, it MUST be prefixed by "//".
@@ -156,6 +164,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group scheme
      */
     public function testWithScheme($url)
     {
@@ -165,6 +174,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group userinfo
      */
     public function testWithUserInfo($url)
     {
@@ -178,6 +188,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group host
      */
     public function testWithHost($url)
     {
@@ -187,6 +198,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group port
      */
     public function testWithPort($url)
     {
@@ -196,6 +208,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group path
      */
     public function testWithPath($url)
     {
@@ -205,6 +218,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group query
      */
     public function testWithQuery($url)
     {
@@ -214,6 +228,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group fragment
      */
     public function testWithFragment($url)
     {
