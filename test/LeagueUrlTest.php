@@ -2,7 +2,7 @@
 
 namespace Psr7\UriInterface\Testsuite;
 
-use League\Uri\Url;
+use League\Uri\Uri;
 
 /**
  * @group league
@@ -14,6 +14,6 @@ class LeagueUrlTest extends AbstractTestPsr7UriInterface
      */
     public function createUriObject($url)
     {
-        return Url::createFromString($url);
+        return Uri::createFromString($url);
     }
 }

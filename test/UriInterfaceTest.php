@@ -124,10 +124,8 @@ class UriInterfaceTest extends PHPUnit_Framework_TestCase
             "url without scheme, authority" => '/path/to/the/sky',
             "url with duplicate value query string" => "http://www.example.com?toto.foo=1&toto.foo=1",
             "url without path, query and fragment" => 'http://www.example.com',
-            "scheme + absolute path and no authority" => 'http:/example.com',
-            "scheme + rootless path and no authority" => 'http:example.com',
             "url with case sensitive host" => 'http://WwW.ExAmPlE.CoM',
-            "URL with full components" => "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
+            "url with full components" => "HtTpS://igor:rasmusen@MaStEr.eXaMpLe.CoM:443/%7ejohndoe/%a1/index.php?foo.bar=value#fragment",
         ];
 
         $implementationTestSuite = [

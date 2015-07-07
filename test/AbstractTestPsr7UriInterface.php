@@ -33,6 +33,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider uriProvider
+     * @group host
      *
      * Host MUST be normalized to lowercase if present
      */
@@ -263,6 +264,18 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
                 "",
                 "http://www.example.com:443/",
             ],
+            "IDN hostname" => [
+                "https://مثال.إختبار:81/foo/bar.php",
+                "https",
+                "",
+                "مثال.إختبار",
+                81,
+                "مثال.إختبار:81",
+                "/foo/bar.php",
+                "",
+                "",
+                "https://مثال.إختبار:81/foo/bar.php",
+            ]/*
             "scheme + rootless path and no authority" => [
                 "http:example.com",
                 "http",
@@ -286,7 +299,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
                 "",
                 "",
                 "http:/example.com",
-            ],
+            ],*/
         ];
     }
 }
