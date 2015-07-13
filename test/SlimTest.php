@@ -3,12 +3,15 @@
 namespace Psr7\UriInterface\Testsuite;
 
 use Slim\Http\Uri;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @group slim
  */
-class SlimTest extends AbstractTestPsr7UriInterface
+class SlimTest extends TestCase
 {
+    use UriInterfaceTestsTrait;
+
     /**
      * {@inheritdoc}
      */

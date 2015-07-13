@@ -3,12 +3,15 @@
 namespace Psr7\UriInterface\Testsuite;
 
 use GuzzleHttp\Psr7\Uri;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @group guzzle
  */
-class GuzzleTest extends AbstractTestPsr7UriInterface
+class GuzzleTest extends TestCase
 {
+    use UriInterfaceTestsTrait;
+
     /**
      * {@inheritdoc}
      */

@@ -2,14 +2,20 @@
 
 namespace Psr7\UriInterface\Testsuite;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit_Framework_Assert as Assert;
+use Psr\Http\Message\UriInterface;
 
-abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
+trait UriInterfaceTestsTrait
 {
     /**
      * @return Psr\Http\Message\UriInterface
      */
     abstract public function createUriObject($url);
+
+    public function testUriImplementsInterface()
+    {
+        Assert::assertInstanceOf('Psr\Http\Message\UriInterface', $this->createUriObject(''));
+    }
 
     /**
      * @dataProvider uriProvider
@@ -18,7 +24,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetScheme($url, $scheme)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($scheme, $url->getScheme());
+        Assert::assertSame($scheme, $url->getScheme());
     }
 
     /**
@@ -28,7 +34,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetUserInfo($url, $scheme, $userinfo)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($userinfo, $url->getUserInfo());
+        Assert::assertSame($userinfo, $url->getUserInfo());
     }
 
     /**
@@ -40,7 +46,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetHost($url, $scheme, $userinfo, $host)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($host, $url->getHost());
+        Assert::assertSame($host, $url->getHost());
     }
 
     /**
@@ -53,7 +59,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetPort($url, $scheme, $userinfo, $host, $port)
     {
         $url = $this->createUriObject($url);
-        $this->assertContains($url->getPort(), [null, $port]);
+        Assert::assertContains($url->getPort(), [null, $port]);
     }
 
     /**
@@ -66,7 +72,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetAuthority($url, $scheme, $userinfo, $host, $port, $authority)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($authority, $url->getAuthority());
+        Assert::assertSame($authority, $url->getAuthority());
     }
 
     /**
@@ -80,7 +86,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testGetPath($url, $scheme, $userinfo, $host, $port, $authority, $path)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($path, $url->getPath());
+        Assert::assertSame($path, $url->getPath());
     }
 
     /**
@@ -104,7 +110,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
         $normalized
     ) {
         $url = $this->createUriObject($url);
-        $this->assertSame($query, $url->getQuery());
+        Assert::assertSame($query, $url->getQuery());
     }
 
     /**
@@ -128,7 +134,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
         $normalized
     ) {
         $url = $this->createUriObject($url);
-        $this->assertSame($fragment, $url->getFragment());
+        Assert::assertSame($fragment, $url->getFragment());
     }
 
     /**
@@ -160,7 +166,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
         $normalized
     ) {
         $url = $this->createUriObject($url);
-        $this->assertSame($normalized, $url->__toString());
+        Assert::assertSame($normalized, $url->__toString());
     }
 
     /**
@@ -170,7 +176,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithScheme($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertEquals($url->getScheme(), $url->withScheme($url->getScheme())->getScheme());
+        Assert::assertEquals($url->getScheme(), $url->withScheme($url->getScheme())->getScheme());
     }
 
     /**
@@ -184,7 +190,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
         $user = array_shift($res);
         $pass = array_shift($res);
 
-        $this->assertEquals($url->getUserInfo(), $url->withUserInfo($user, $pass)->getUserInfo());
+        Assert::assertEquals($url->getUserInfo(), $url->withUserInfo($user, $pass)->getUserInfo());
     }
 
     /**
@@ -194,7 +200,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithHost($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertEquals($url->getHost(), $url->withHost($url->getHost())->getHost());
+        Assert::assertEquals($url->getHost(), $url->withHost($url->getHost())->getHost());
     }
 
     /**
@@ -204,7 +210,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithPort($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertContains($url->withPort($url->getPort())->getPort(), [null, $url->getPort()]);
+        Assert::assertContains($url->withPort($url->getPort())->getPort(), [null, $url->getPort()]);
     }
 
     /**
@@ -214,7 +220,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithPath($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertSame($url->getPath(), $url->withPath($url->getPath())->getPath());
+        Assert::assertSame($url->getPath(), $url->withPath($url->getPath())->getPath());
     }
 
     /**
@@ -224,7 +230,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithQuery($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertEquals($url->getQuery(), $url->withQuery($url->getQuery())->getQuery());
+        Assert::assertEquals($url->getQuery(), $url->withQuery($url->getQuery())->getQuery());
     }
 
     /**
@@ -234,7 +240,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
     public function testWithFragment($url)
     {
         $url = $this->createUriObject($url);
-        $this->assertEquals($url->getFragment(), $url->withFragment($url->getFragment())->getFragment());
+        Assert::assertEquals($url->getFragment(), $url->withFragment($url->getFragment())->getFragment());
     }
 
     public function uriProvider()
@@ -275,31 +281,7 @@ abstract class AbstractTestPsr7UriInterface extends PHPUnit_Framework_TestCase
                 "",
                 "",
                 "https://مثال.إختبار:81/foo/bar.php",
-            ]/*
-            "scheme + rootless path and no authority" => [
-                "http:example.com",
-                "http",
-                "",
-                "",
-                null,
-                "",
-                "example.com",
-                "",
-                "",
-                "http:example.com",
             ],
-            "scheme + absolute path and no authority" => [
-                "http:/example.com",
-                "http",
-                "",
-                "",
-                null,
-                "",
-                "/example.com",
-                "",
-                "",
-                "http:/example.com",
-            ],*/
         ];
     }
 }

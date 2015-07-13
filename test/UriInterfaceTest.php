@@ -2,12 +2,12 @@
 
 namespace Psr7\UriInterface\Testsuite;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @group compare
  */
-class UriInterfaceTest extends PHPUnit_Framework_TestCase
+class UriInterfaceTest extends TestCase
 {
     /**
      * @dataProvider urlProvider
