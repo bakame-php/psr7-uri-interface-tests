@@ -15,7 +15,12 @@ class DiactorosTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function createUriObject($url)
+    public function createDefaultUri()
+    {
+        return $this->createUriObject();
+    }
+
+    public function createUriObject($url = '')
     {
         return new Uri($url);
     }

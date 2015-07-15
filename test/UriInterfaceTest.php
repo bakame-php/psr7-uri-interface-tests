@@ -131,8 +131,9 @@ class UriInterfaceTest extends TestCase
         $implementationTestSuite = [
             'diactoros' => 'Psr7\UriInterface\Testsuite\DiactorosTest',
             'guzzle'    => 'Psr7\UriInterface\Testsuite\GuzzleTest',
-            'league'    => 'Psr7\UriInterface\Testsuite\LeagueUrlTest',
+            'league'    => 'Psr7\UriInterface\Testsuite\LeagueTest',
             'slim'      => 'Psr7\UriInterface\Testsuite\SlimTest',
+            'phpixie'   => 'Psr7\UriInterface\Testsuite\PhpixieTest',
         ];
 
         $res = [];

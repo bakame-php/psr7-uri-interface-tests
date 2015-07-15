@@ -2,13 +2,13 @@
 
 namespace Psr7\UriInterface\Testsuite;
 
-use GuzzleHttp\Psr7\Uri;
+use PHPixie\HTTP\Messages\URI\Implementation;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
- * @group guzzle
+ * @group phpixie
  */
-class GuzzleTest extends TestCase
+class PhpixieTest extends TestCase
 {
     use UriInterfaceTestsTrait;
 
@@ -22,6 +22,6 @@ class GuzzleTest extends TestCase
 
     public function createUriObject($url = '')
     {
-        return new Uri($url);
+        return new Implementation($url);
     }
 }

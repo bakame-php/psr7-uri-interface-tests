@@ -8,14 +8,19 @@ use PHPUnit_Framework_TestCase as TestCase;
 /**
  * @group league
  */
-class LeagueUrlTest extends TestCase
+class LeagueTest extends TestCase
 {
     use UriInterfaceTestsTrait;
 
     /**
      * {@inheritdoc}
      */
-    public function createUriObject($url)
+    public function createDefaultUri()
+    {
+        return $this->createUriObject();
+    }
+
+    public function createUriObject($url = '')
     {
         return Http::createFromString($url);
     }

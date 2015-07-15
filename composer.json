@@ -2,8 +2,10 @@
     "require": {
         "zendframework/zend-diactoros": "^1.1",
         "guzzlehttp/psr7": "^1.1",
-        "league/url": "dev-master",
-        "slim/slim": "3.x-dev"
+        "league/uri": "dev-master",
+        "slim/slim": "3.x-dev",
+        "phpixie/http": "dev-master",
+        "phpixie/slice": "dev-master"
     },
     "autoload": {
         "psr-4": {
