@@ -2,14 +2,16 @@
     "require": {
         "zendframework/zend-diactoros": "^1.1",
         "guzzlehttp/psr7": "^1.1",
-        "league/uri": "dev-master",
-        "slim/slim": "3.x-dev",
-        "phpixie/http": "dev-master",
-        "phpixie/slice": "dev-master"
+        "league/uri-schemes": "^1.0",
+        "slim/slim": "^3.0",
+        "phpixie/http": "^3.0",
+        "spatie/url": "^1.0",
+        "riimu/kit-urlparser": "^2.0",
+        "phpunit/phpunit": "^5.5"
     },
     "autoload": {
         "psr-4": {
-            "Psr7\\UriInterface\\Testsuite\\": "test"
+            "Bakame\\Psr7\\UriTest\\" : "tests"
         }
     }
 }
