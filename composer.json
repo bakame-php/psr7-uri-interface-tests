@@ -9,8 +9,7 @@
         "riimu/kit-urlparser": "^2.0",
         "phpunit/phpunit": "^5.5",
         "jasny/http-message": "^1.2",
-        "windwalker/uri": "^3.1",
-        "ringcentral/psr7": "^1.2"
+        "windwalker/uri": "^3.1"
     },
     "autoload": {
         "psr-4": {

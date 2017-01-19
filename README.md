@@ -1,17 +1,5 @@
-[WIP] PSR-7 UriInterface test suite
+Unit tests for PSR-7 UriInterface
 =======
-
-Motivation
--------
-
-While developing [League Url](https://github.com/thephpleague/url/) version 4, I wanted to:
-
-- implement the [PSR-7 UriInterface](http://php-fig.org/psr/psr-7/#3-5-psr-http-message-uriinterface);
-- compare objects implementing this interface easily with a `Url::sameValueAs` method;
-
-On the `League\Url` test suite the method worked because I mocked the interface but on real world implementation it failed miserably. So I setup this test suite to compare implementations against what the interface expects.
-
-This is a work in progress. Feel free to update and improve the tests. It will help everyone get a real interoperable `UriInterface`.
 
 Tested implementations
 -------
@@ -19,8 +7,13 @@ Tested implementations
 Out of the box this package can run the tests against the following implementations (order alphabetically):
 
 - [Guzzle PSR-7](https://github.com/guzzle/psr7)
-- [League Url](https://github.com/thephpleague/url/) (version 4.x)
-- [Slim](https://github.com/slimphp/Slim/tree/3.x) (version 3.x)
+- [Jasny HTTP Message](https://github.com/jasny/http-message)
+- [League URI schemes](https://github.com/thephpleague/uri-schemes/)
+- [PHPixie](https://github.com/PHPixie/HTTP)
+- [Riimu KIT UrlParser](https://github.com/Riimu/Kit-UrlParser)
+- [Slim](https://github.com/slimphp/Slim)
+- [Spatie URL](https://github.com/spatie/url)
+- [Windwalker URI](https://github.com/ventoviro/windwalker-uri)
 - [Zend Diactoros](https://github.com/zendframework/zend-diactoros)
 
 System Requirements
@@ -28,7 +21,7 @@ System Requirements
 
 You need:
 
-- **PHP >= 5.5.0** or **HHVM >= 3.6**, but the latest stable version of PHP/HHVM is recommended
+- The latest stable version of PHP is recommended
 - the `mbstring` extension
 - the `intl` extension
 
@@ -56,8 +49,27 @@ Adding a new implementation
 - Make sure your PSR-7 `UriInterface` interface implementation is available on [packagist](https://packagist.org) first
 - Clone this repo
 - Update the `composer.json` file with your package
-- Add a new class in the `test` directory for your implementation that extends the `AbstractTestPsr7UriInterface` abstract class. You can copy/paste an implementation test suite to see how it works. Implements the `createUriObject` abstract method.
-- Update the `UriInterfaceTest::urlProvider` with your implementation
+- Add a new class in the `tests` directory for your implementation that extends `Bakame\Psr7\UriTest\AbstractUriTestCase` by providing a URI factory to bootstrap URI object creation from your library.
+
+```php
+<?php
+
+namespace Bakame\Psr7\UriTest;
+
+use My\Library\Uri;
+
+/**
+ * @group my-library
+ */
+final class MyLibraryTest extends AbstractUriTestCase
+{
+    protected function createUri($uri = '')
+    {
+        return new Uri($uri);
+    }
+}
+```
+
 - run the test suite.
 - you can submit your implementation via Pull Request (don't forget to update the `README.md` file with a link to your repo in the Tested implementation section).
 
