@@ -22,27 +22,12 @@ abstract class AbstractUriTestCase extends TestCase
         $this->uri = null;
     }
 
-    public function testGetterAccess()
-    {
-        $this->assertSame('http', $this->uri->getScheme());
-        $this->assertSame('login:pass', $this->uri->getUserInfo());
-        $this->assertSame('secure.example.com', $this->uri->getHost());
-        $this->assertSame(443, $this->uri->getPort());
-        $this->assertSame('login:pass@secure.example.com:443', $this->uri->getAuthority());
-        $this->assertSame('/test/query.php', $this->uri->getPath());
-        $this->assertSame('kingkong=toto', $this->uri->getQuery());
-        $this->assertSame('doc3', $this->uri->getFragment());
-    }
-
-    public function testModifiedMethodsReturnsUriInterfaceInstance()
-    {
-        $this->assertInstanceOf(UriInterface::class, $this->uri->withPath('/test/query.php'));
-        $this->assertInstanceOf(UriInterface::class, $this->uri->withFragment('doc3'));
-    }
-
     /**
      * @dataProvider schemeProvider
      * @group scheme
+     *
+     * The value returned MUST be normalized to lowercase, per RFC 3986
+     * Section 3.1.
      */
     public function testGetScheme($scheme, $expected)
     {
@@ -63,6 +48,11 @@ abstract class AbstractUriTestCase extends TestCase
     /**
      * @dataProvider userInfoProvider
      * @group userinfo
+     *
+     * If a user is present in the URI, this will return that value;
+     * additionally, if the password is also present, it will be appended to the
+     * user value, with a colon (":") separating the values.
+     *
      */
     public function testGetUserInfo($user, $pass, $expected)
     {
@@ -83,10 +73,12 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @dataProvider hostProvider
      * @group host
+     * @dataProvider hostProvider
      *
-     * Host MUST be normalized to lowercase if present
+     * The value returned MUST be normalized to lowercase, per RFC 3986
+     * Section 3.2.2.
+     *
      */
     public function testGetHost($host, $expected)
     {
@@ -105,7 +97,18 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
+     * @group port
      * @dataProvider portProvider
+     *
+     * If a port is present, and it is non-standard for the current scheme,
+     * this method MUST return it as an integer. If the port is the standard port
+     * used with the current scheme, this method SHOULD return null.
+     *
+     * If no port is present, and no scheme is present, this method MUST return
+     * a null value.
+     *
+     * If no port is present, but a scheme is present, this method MAY return
+     * the standard port for that scheme, but SHOULD return null.
      */
     public function testPort($uri, $port, $expected)
     {
@@ -117,16 +120,22 @@ abstract class AbstractUriTestCase extends TestCase
     public function portProvider()
     {
         return [
-            ['http://www.example.com', 443, 443],
-            ['http://www.example.com', 80, null],
-            ['http://www.example.com', null, null],
-            ['//www.example.com', 80, 80],
+            'non standard port for http' => ['http://www.example.com', 443, 443],
+            'remove port' => ['http://www.example.com', null, null],
+            'standard port on schemeless http url' => ['//www.example.com', 80, 80],
         ];
     }
 
+    public function testUriWithStandardPort($uri, $port)
+    {
+        $uri = $this->createUri('http://example.com:80');
+        $this->assertContains($uri->getPort(), [80, null], "If no port is present, but a scheme is present, this method MAY return the standard port for that scheme, but SHOULD return null.");
+    }
+
+
     /**
-     * @dataProvider authorityProvider
      * @group authority
+     * @dataProvider authorityProvider
      *
      * If the port component is not set or is the standard port for the current
      * scheme, it SHOULD NOT be included.
@@ -295,74 +304,97 @@ abstract class AbstractUriTestCase extends TestCase
                 'pass'     => '',
                 'host'     => '',
                 'port'     => null,
-                'path'     => '/foo/bar',
+                'path'     => 'foo/bar',
                 'query'    => '',
                 'fragment' => '',
-                'uri'      => '/foo/bar',
+                'uri'      => 'foo/bar',
             ],
         ];
     }
 
+    /**
+     * @group fragment
+     */
     public function testRemoveFragment()
     {
-        $this->assertSame(
-            'http://login:pass@secure.example.com:443/test/query.php?kingkong=toto',
-            (string) $this->uri->withFragment('')
-        );
+        $uri = 'http://example.com/path/to/me';
+        $this->assertSame($uri, (string) $this->createUri($uri.'#doc')->withFragment(''));
     }
 
+    /**
+     * @group query
+     */
     public function testRemoveQuery()
     {
-        $this->assertSame(
-            'http://login:pass@secure.example.com:443/test/query.php#doc3',
-            (string) $this->uri->withQuery('')
+        $uri = 'http://example.com/path/to/me';
+        $this->assertSame($uri, (string) (string) $this->createUri($uri.'?name=value')->withQuery(''));
+    }
+
+    /**
+     * @group path
+     */
+    public function testRemovePath()
+    {
+        $uri = 'http://example.com';
+        $this->assertContains(
+            (string) $this->createUri($uri.'/path/to/me')->withPath(''),
+            [$uri, $uri.'/']
         );
     }
 
-    public function testRemovePath()
-    {
-        $this->assertTrue(in_array((string) $this->uri->withPath(''), [
-            'http://login:pass@secure.example.com:443?kingkong=toto#doc3',
-            'http://login:pass@secure.example.com:443/?kingkong=toto#doc3',
-        ]));
-    }
-
+    /**
+     * @group port
+     */
     public function testRemovePort()
     {
         $this->assertSame(
-            'http://login:pass@secure.example.com/test/query.php?kingkong=toto#doc3',
-            (string) $this->uri->withPort(null));
+            'http://example.com/path/to/me',
+            (string) $this->createUri('http://example.com:81/path/to/me')->withPort(null)
+        );
     }
 
+    /**
+     * @group userinfo
+     */
     public function testRemoveUserInfo()
     {
         $this->assertSame(
-            'http://secure.example.com:443/test/query.php?kingkong=toto#doc3',
-            (string) $this->uri->withUserInfo('')
+            'http://example.com/path/to/me',
+            (string) $this->createUri('http://user:pass@example.com/path/to/me')->withUserInfo('')
         );
     }
 
+    /**
+     * @group scheme
+     */
     public function testRemoveScheme()
     {
         $this->assertSame(
-            '//login:pass@secure.example.com:443/test/query.php?kingkong=toto#doc3',
-            (string) $this->uri->withScheme('')
+            '//example.com/path/to/me',
+            (string) $this->createUri('http://example.com/path/to/me')->withScheme('')
         );
     }
 
+    /**
+     * @group authority
+     */
     public function testRemoveAuthority()
     {
-        $uri_with_host = (string) $this->uri
+        $uri = 'http://user:login@example.com:82/path?q=v#doc';
+
+        $uri_with_host = $this->createUri($uri)
             ->withScheme('')
             ->withUserInfo('')
             ->withPort(null)
             ->withHost('')
         ;
 
-        $this->assertSame('/test/query.php?kingkong=toto#doc3', $uri_with_host);
+        $this->assertSame('/path?q=v#doc', (string) $uri_with_host);
     }
 
     /**
+     * @group scheme
+     * @group invalid-url
      * @dataProvider withSchemeFailedProvider
      */
     public function testWithSchemeFailed($scheme)
@@ -382,8 +414,8 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group userinfo
+     * @group invalid-url
      * @dataProvider withUserInfoFailedProvider
-     * @expectedException InvalidArgumentException
      */
     public function testWithUserInfoFailed($user, $pass)
     {
@@ -402,6 +434,7 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group host
+     * @group invalid-url
      * @dataProvider withHostFailedProvider
      */
     public function testWithHostFailed($host)
@@ -434,30 +467,50 @@ abstract class AbstractUriTestCase extends TestCase
         ];
     }
 
+    /**
+     * @group path
+     * @group invalid-url
+     */
     public function testWithPathFailedWithInvalidPathRelativeToTheAuthority()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->createUri('http://example.com')->withPath('foo/bar');
     }
 
+    /**
+     * @group path
+     * @group invalid-url
+     */
     public function testWithPathFailedWithInvalidChars()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->createUri('http://example.com')->withPath('/?');
     }
 
+    /**
+     * @group query
+     * @group invalid-url
+     */
     public function testWithQueryFailedWithInvalidChars()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->createUri('http://example.com')->withQuery('#');
     }
 
+    /**
+     * @group port
+     * @group invalid-url
+     */
     public function testModificationFailedWithUnsupportedPort()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->createUri('http://example.com')->withPort(0);
     }
 
+    /**
+     * @group host
+     * @group invalid-url
+     */
     public function testModificationFailedWithInvalidHost()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -465,6 +518,7 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
+     * @group invalid-url
      * @dataProvider invalidURI
      */
     public function testCreateFromInvalidUrlKO($uri)
@@ -481,18 +535,28 @@ abstract class AbstractUriTestCase extends TestCase
         ];
     }
 
-    public function testModificationFailed()
+    /**
+     * @group scheme
+     * @group invalid-url
+     */
+    public function testModificationFailedWithSchemeAndPath()
     {
         $this->expectException(InvalidArgumentException::class);
         $this->createUri('/path')->withScheme('http');
     }
 
+    /**
+     * @group empty-url
+     */
     public function testEmptyValueDetection()
     {
         $expected = '//0:0@0/0?0#0';
         $this->assertSame($expected, (string) $this->createUri($expected));
     }
 
+    /**
+     * @group path
+     */
     public function testPathDetection()
     {
         $expected = 'foo/bar:';
