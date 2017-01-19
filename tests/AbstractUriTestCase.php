@@ -8,8 +8,20 @@ use InvalidArgumentException;
 
 abstract class AbstractUriTestCase extends TestCase
 {
+    /**
+     * @var UriInterface
+     */
+    protected $uri;
+
     protected $uri_string = 'http://login:pass@secure.example.com:443/test/query.php?kingkong=toto#doc3';
 
+    /**
+     * UriInterface factory
+     *
+     * @param string $uri
+     *
+     * @return UriInterface
+     */
     abstract protected function createUri($uri = '');
 
     protected function setUp()
@@ -23,8 +35,8 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @dataProvider schemeProvider
      * @group scheme
+     * @dataProvider schemeProvider
      *
      * The value returned MUST be normalized to lowercase, per RFC 3986
      * Section 3.1.
@@ -46,8 +58,8 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @dataProvider userInfoProvider
      * @group userinfo
+     * @dataProvider userInfoProvider
      *
      * If a user is present in the URI, this will return that value;
      * additionally, if the password is also present, it will be appended to the
@@ -126,6 +138,9 @@ abstract class AbstractUriTestCase extends TestCase
         ];
     }
 
+    /**
+     * @group port
+     */
     public function testUriWithStandardPort($uri, $port)
     {
         $uri = $this->createUri('http://example.com:80');
@@ -198,8 +213,8 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @dataProvider queryProvider
      * @group query
+     * @dataProvider queryProvider
      *
      * The value returned MUST be percent-encoded, but MUST NOT double-encode
      * any characters. To determine what characters to encode, please refer to
@@ -223,8 +238,8 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @dataProvider fragmentProvider
      * @group fragment
+     * @dataProvider fragmentProvider
      *
      * The value returned MUST be percent-encoded, but MUST NOT double-encode
      * any characters. To determine what characters to encode, please refer to
@@ -246,8 +261,8 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
+     * @group uri
      * @dataProvider stringProvider
-     * @group toString
      *
      * - If a scheme is present, it MUST be suffixed by ":".
      * - If an authority is present, it MUST be prefixed by "//".
@@ -394,7 +409,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group scheme
-     * @group invalid-url
      * @dataProvider withSchemeFailedProvider
      */
     public function testWithSchemeFailed($scheme)
@@ -414,7 +428,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group userinfo
-     * @group invalid-url
      * @dataProvider withUserInfoFailedProvider
      */
     public function testWithUserInfoFailed($user, $pass)
@@ -434,7 +447,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group host
-     * @group invalid-url
      * @dataProvider withHostFailedProvider
      */
     public function testWithHostFailed($host)
@@ -469,7 +481,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group path
-     * @group invalid-url
      */
     public function testWithPathFailedWithInvalidPathRelativeToTheAuthority()
     {
@@ -479,7 +490,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group path
-     * @group invalid-url
      */
     public function testWithPathFailedWithInvalidChars()
     {
@@ -489,7 +499,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group query
-     * @group invalid-url
      */
     public function testWithQueryFailedWithInvalidChars()
     {
@@ -499,7 +508,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group port
-     * @group invalid-url
      */
     public function testModificationFailedWithUnsupportedPort()
     {
@@ -509,7 +517,6 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group host
-     * @group invalid-url
      */
     public function testModificationFailedWithInvalidHost()
     {
@@ -518,7 +525,7 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @group invalid-url
+     * @group uri
      * @dataProvider invalidURI
      */
     public function testCreateFromInvalidUrlKO($uri)
@@ -536,8 +543,7 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @group scheme
-     * @group invalid-url
+     * @group uri
      */
     public function testModificationFailedWithSchemeAndPath()
     {
@@ -546,7 +552,7 @@ abstract class AbstractUriTestCase extends TestCase
     }
 
     /**
-     * @group empty-url
+     * @group uri
      */
     public function testEmptyValueDetection()
     {
@@ -556,6 +562,7 @@ abstract class AbstractUriTestCase extends TestCase
 
     /**
      * @group path
+     * @group uri
      */
     public function testPathDetection()
     {
