@@ -7,7 +7,7 @@
         "phpixie/http": "^3.0",
         "spatie/url": "^1.0",
         "riimu/kit-urlparser": "^2.0",
-        "phpunit/phpunit": "^5.5",
+        "phpunit/phpunit": "^6.0",
         "jasny/http-message": "^1.2",
         "windwalker/uri": "^3.1"
     },
@@ -15,5 +15,8 @@
         "psr-4": {
             "Bakame\\Psr7\\UriTest\\" : "tests"
         }
+    },
+    "scripts": {
+        "test": "phpunit --coverage-text --colors=always"
     }
 }

@@ -40,34 +40,42 @@ Testing
 To run the tests, run the following command from the project folder.
 
 ``` bash
-$ phpunit
+$ composer test
 ```
 
 You can also run different tests according to the following groups:
 
-- `@group scheme` runs only scheme related tests;
-- `@group userinfo` runs only userinfo related tests;
-- `@group host` runs only host related tests;
-- `@group port` runs only port related tests;
-- `@group authority` runs only authority related tests;
-- `@group path` runs only path related tests;
-- `@group query` runs only query related tests;
-- `@group fragment` runs only fragment related tests;
-- `@group uri` runs only uri related tests;
-- `@group diactoros` runs all the tests for `Zend\Diactoros\Uri`
-- `@group guzzle` runs all the tests for `Guzzle\Psr7\Uri`
-- `@group jasny` runs all the tests for `Jasny\HttpMessage\Uri`
-- `@group league` runs all the tests for `League\Uri\Schemes\Http`
-- `@group phpixie` runs all the tests for `PHPixie\HTTP\Messages\URI\Implementation`
-- `@group riimu` runs all the tests for `Riimu\Kit\UrlParser\Uri`
-- `@group slim` runs all the tests for `Slim\HTTP\Uri`
-- `@group spatie` runs all the tests for `Spatie\Url\Url`
-- `@group windwalker` runs all the tests for `Windwalker\Uri\PsrUri`
+|   Group     | Run tests for the    |
+|-------------|----------------------|
+| `uri`       |  complete URI        |
+| `scheme`    |  scheme component    |
+| `userinfo`  |  userinfo component  |
+| `host`      |  host component      |
+| `port`      |  port component      |
+| `authority` |  authority part      |
+| `path`      |  path component      |
+| `query`     |  query component     |
+| `fragment`  |  fragment component  |
+
+Or run all the test against a specific implementation
+
+|   Group      | Run tests against                          |
+|--------------|--------------------------------------------|
+| `diactoros`  | `Zend\Diactoros\Uri`                       |
+| `guzzle`     | `Guzzle\Psr7\Uri`                          |
+| `jasny`      | `Jasny\HttpMessage\Uri`                    |
+| `league`     | `League\Uri\Schemes\Http`                  |
+| `phpixie`    | `PHPixie\HTTP\Messages\URI\Implementation` |
+| `riimu`      | `Riimu\Kit\UrlParser\Uri`                  |
+| `slim`       | `Slim\HTTP\Uri`                            |
+| `spatie`     | `Spatie\Url\Url`                           |
+| `windwalker` | `Windwalker\Uri\PsrUri`                    |
 
 example
 
 ``` bash
-$ phpunit --group port
+$ composer test -- --group port
+$ composer test -- --group spatie
 ```
 
 Adding a new implementation

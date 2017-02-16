@@ -53,7 +53,7 @@ abstract class AbstractUriTestCase extends TestCase
         return [
             'normalized scheme' => ['HtTpS', 'https'],
             'simple scheme'     => ['http', 'http'],
-            'no scheme'         => ['',''],
+            'no scheme'         => ['', ''],
         ];
     }
 
@@ -141,7 +141,7 @@ abstract class AbstractUriTestCase extends TestCase
     /**
      * @group port
      */
-    public function testUriWithStandardPort($uri, $port)
+    public function testUriWithStandardPort()
     {
         $uri = $this->createUri('http://example.com:80');
         $this->assertContains($uri->getPort(), [80, null], "If no port is present, but a scheme is present, this method MAY return the standard port for that scheme, but SHOULD return null.");
@@ -158,11 +158,13 @@ abstract class AbstractUriTestCase extends TestCase
     public function testGetAuthority($scheme, $user, $pass, $host, $port, $authority)
     {
         $uri = $this
-                ->createUri()
-                ->withHost($host)
-                ->withScheme($scheme)
-                ->withUserInfo($user, $pass)
-                ->withPort($port);
+            ->createUri()
+            ->withHost($host)
+            ->withScheme($scheme)
+            ->withUserInfo($user, $pass)
+            ->withPort($port)
+        ;
+
         $this->assertSame($authority, $uri->getAuthority());
     }
 
@@ -279,14 +281,19 @@ abstract class AbstractUriTestCase extends TestCase
     public function testToString($scheme, $user, $pass, $host, $port, $path, $query, $fragment, $expected)
     {
         $uri = $this->createUri()
-                ->withHost($host)
-                ->withScheme($scheme)
-                ->withUserInfo($user, $pass)
-                ->withPort($port)
-                ->withPath($path)
-                ->withQuery($query)
-                ->withFragment($fragment);
-        $this->assertSame($expected, (string) $uri, 'URI string must be normalized according to RFC3986 rules');
+            ->withHost($host)
+            ->withScheme($scheme)
+            ->withUserInfo($user, $pass)
+            ->withPort($port)
+            ->withPath($path)
+            ->withQuery($query)
+            ->withFragment($fragment)
+        ;
+        $this->assertSame(
+            $expected,
+            (string) $uri,
+            'URI string must be normalized according to RFC3986 rules'
+        );
     }
     public function stringProvider()
     {
